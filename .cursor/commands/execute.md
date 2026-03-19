@@ -84,6 +84,11 @@ Log to `logs/workflow.md` in README format (see `01-workflow-logging.mdc`):
 
 ### [HH:MM:SS] COMMAND:execute - COMPLETE
 > Implementation complete
+
+### SUMMARY
+- **Command**: /execute
+- **Result**: Implementation complete
+- **Key points**: <plan path>, components implemented, key files created, any notable decisions or issues>
 ```
 
 ## Example
@@ -102,6 +107,11 @@ Log output:
 
 ### [10:31:45] COMMAND:execute - COMPLETE
 > Implementation complete
+
+### SUMMARY
+- **Command**: /execute
+- **Result**: Implementation complete
+- **Key points**: plan-20260319-103000. UserService, AuthMiddleware, /login route. Key files: src/services/user.ts, src/middleware/auth.ts.
 ```
 
 ## Next Step

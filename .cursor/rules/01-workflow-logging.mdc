@@ -28,6 +28,15 @@ When complete:
 > <summary or plan ID if applicable>
 ```
 
+Then append a **SUMMARY** block so the run can be read at a glance when the command finishes:
+
+```
+### SUMMARY
+- **Command**: /<plan|execute|review>
+- **Result**: <one-line outcome>
+- **Key points**: <bullets or short paragraph — skills used, decisions, artifacts, or findings>
+```
+
 ### 2. Skill Invocation
 
 When an agent invokes a skill:
@@ -123,4 +132,9 @@ Then use `### [HH:MM:SS] EVENT - STATE` for each line. This matches the README "
 
 ### [10:30:15] COMMAND:plan - COMPLETE
 > Plan saved to plans/plan-20260319-103000.md
+
+### SUMMARY
+- **Command**: /plan
+- **Result**: Plan saved to plans/plan-20260319-103000.md
+- **Key points**: solution-design (3 components), database-design, security-review, devops-pipeline. Auth service, middleware, routes.
 ```

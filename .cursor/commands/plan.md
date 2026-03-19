@@ -62,6 +62,7 @@ When the plan is complete:
 1. Generate a plan ID: `plan-YYYYMMDD-HHMMSS` (e.g. `plan-20260319-103000`).
 2. Write the full plan (task, components, schema, security mitigations, DevOps steps) to `plans/plan-<ID>.md`.
 3. Log to `logs/workflow.md`: `COMMAND:plan - COMPLETE` with `> Plan saved to plans/plan-<ID>.md`.
+4. Append a **SUMMARY** block (see `01-workflow-logging.mdc`): Command, Result (plan path), Key points (skills run, main decisions/components).
 
 This allows executing a specific plan later: `/execute plans/plan-<ID>`.
 
@@ -90,6 +91,11 @@ Log output (in README format):
 ...
 ### [10:30:30] COMMAND:plan - COMPLETE
 > Plan saved to plans/plan-20260319-103000.md
+
+### SUMMARY
+- **Command**: /plan
+- **Result**: Plan saved to plans/plan-20260319-103000.md
+- **Key points**: solution-design (3 components), database-design, security-review, devops-pipeline. Auth service, middleware, routes.
 ```
 
 ## Next Step

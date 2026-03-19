@@ -101,6 +101,11 @@ Log to `logs/workflow.md` in README format (see `01-workflow-logging.mdc`):
 
 ### [HH:MM:SS] COMMAND:review - COMPLETE
 > Review complete: PASS/FAIL
+
+### SUMMARY
+- **Command**: /review
+- **Result**: PASS or FAIL
+- **Key points**: <overall verdict>, critical issues if any, components checked, readiness for deployment>
 ```
 
 ## Actions
