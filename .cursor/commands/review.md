@@ -93,11 +93,51 @@ DevOps Readiness: PASS/FAIL
 
 ## Logging
 
-Log to `logs/workflow.md` in README format (see `01-workflow-logging.mdc`):
+Each phase logs to `logs/workflow.md` using the format in `01-workflow-logging.mdc` (match README "What Gets Logged"):
+
+- Start each run with `## Workflow Run: <ISO timestamp>`, **Task**, **Command**: /review
+- Use `### [HH:MM:SS] COMMAND:review - START` and `PHASE:<name> - INVOKED` / `- Complete` for each phase (code-quality, architecture, security, test-coverage, devops-readiness), then `COMMAND:review - COMPLETE`
+- Log decisions, phase outputs (PASS/FAIL, issues), and completion
+- Append a **SUMMARY** block (see `01-workflow-logging.mdc`): Command, Result (PASS or FAIL), Key points (overall verdict, critical issues if any, components checked, readiness for deployment)
 
 ```
+---
+## Workflow Run: YYYY-MM-DDTHH:MM:SSZ
+**Task**: Audit implementation
+**Command**: /review
+
 ### [HH:MM:SS] COMMAND:review - START
 > Auditing implementation
+
+### [HH:MM:SS] PHASE:code-quality - INVOKED
+> Checking against coding standards
+
+### [HH:MM:SS] PHASE:code-quality - Complete
+> <PASS/FAIL>, issues if any
+...
+### [HH:MM:SS] PHASE:architecture - INVOKED
+> Verifying alignment with plan
+
+### [HH:MM:SS] PHASE:architecture - Complete
+> <PASS/FAIL>, components implemented, gaps if any
+
+### [HH:MM:SS] PHASE:security - INVOKED
+> Verifying security mitigations
+
+### [HH:MM:SS] PHASE:security - Complete
+> <PASS/FAIL>, mitigations, gaps if any
+
+### [HH:MM:SS] PHASE:test-coverage - INVOKED
+> Checking tests
+
+### [HH:MM:SS] PHASE:test-coverage - Complete
+> <percentage>%, critical paths, gaps if any
+
+### [HH:MM:SS] PHASE:devops-readiness - INVOKED
+> Verifying deployment readiness
+
+### [HH:MM:SS] PHASE:devops-readiness - Complete
+> <PASS/FAIL>, ready for deployment
 
 ### [HH:MM:SS] COMMAND:review - COMPLETE
 > Review complete: PASS/FAIL
@@ -106,6 +146,62 @@ Log to `logs/workflow.md` in README format (see `01-workflow-logging.mdc`):
 - **Command**: /review
 - **Result**: PASS or FAIL
 - **Key points**: <overall verdict>, critical issues if any, components checked, readiness for deployment>
+```
+
+## Example
+
+```bash
+/review
+```
+
+Log output (in README format):
+
+```
+---
+## Workflow Run: 2026-03-19T10:32:00Z
+**Task**: Audit implementation
+**Command**: /review
+
+### [10:32:01] COMMAND:review - START
+> Auditing implementation
+
+### [10:32:02] PHASE:code-quality - INVOKED
+> Checking against coding standards
+
+### [10:32:05] PHASE:code-quality - Complete
+> PASS, 0 critical issues
+
+### [10:32:06] PHASE:architecture - INVOKED
+> Verifying alignment with plan
+
+### [10:32:08] PHASE:architecture - Complete
+> PASS, 3/3 components implemented
+
+### [10:32:09] PHASE:security - INVOKED
+> Verifying security mitigations
+
+### [10:32:11] PHASE:security - Complete
+> PASS, mitigations in place
+
+### [10:32:12] PHASE:test-coverage - INVOKED
+> Checking tests
+
+### [10:32:14] PHASE:test-coverage - Complete
+> 85%, critical paths covered
+
+### [10:32:15] PHASE:devops-readiness - INVOKED
+> Verifying deployment readiness
+
+### [10:32:17] PHASE:devops-readiness - Complete
+> PASS, ready for deployment
+
+### [10:32:17] COMMAND:review - COMPLETE
+> Review complete: PASS
+
+### SUMMARY
+- **Command**: /review
+- **Result**: PASS
+- **Key points**: All phases passed. Code quality, architecture, security, test coverage, devops readiness verified. Ready for deployment.
 ```
 
 ## Actions
