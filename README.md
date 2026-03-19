@@ -34,6 +34,18 @@ Complete observability: Every workflow action is logged to `logs/workflow.md` �
                             +---------------------------+
 ```
 
+### Quick test: get a real workflow log
+
+Use the **Quote of the Day API** — small scope, one copy-paste, then execute.
+
+**1. Copy-paste (run as /plan):**
+
+```
+/plan Build a Quote of the Day API: GET /quote returns a random quote from an in-memory or file-backed list. Add input validation, rate limiting, a Dockerfile, and GET /health for readiness.
+```
+
+**2. Execute:** Run `/execute plans/plan-<ID>` (use the plan ID from the log). Done — `logs/workflow.md` will have the full run.
+
 ---
 
 ## /plan — Workflow Step 1: Analyze & Design
