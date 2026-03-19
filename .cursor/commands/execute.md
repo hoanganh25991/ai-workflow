@@ -74,12 +74,12 @@ After implementation:
 
 ## Logging
 
-Log to `logs/workflow.md` using the format in `01-workflow-logging.mdc` (match README "What Gets Logged"):
+Each phase logs to `logs/workflow.md` using the format in `01-workflow-logging.mdc` (match README "What Gets Logged"):
 
 - Start each run with `## Workflow Run: <ISO timestamp>`, **Task**, **Command**: /execute
-- Use `### [HH:MM:SS] COMMAND:execute - START` and `COMMAND:execute - COMPLETE`
-- Log plan path, components implemented, and completion
-- Append a **SUMMARY** block (see `01-workflow-logging.mdc`): Command, Result, Key points (plan path, components, key files, notable decisions or issues)
+- Use `### [HH:MM:SS] COMMAND:execute - START` and `PHASE:<name> - INVOKED` / `- Complete` for each phase (read-plan, implement, build, test, validation), then `COMMAND:execute - COMPLETE`
+- Log decisions, phase outputs, and completion
+- Append a **SUMMARY** block (see `01-workflow-logging.mdc`): Command, Result (implementation complete), Key points (plan path, phases run, components, key files, notable decisions or issues)
 
 ```
 ---
@@ -89,8 +89,36 @@ Log to `logs/workflow.md` using the format in `01-workflow-logging.mdc` (match R
 
 ### [HH:MM:SS] COMMAND:execute - START
 > Input: "plans/plan-<ID>" (or "latest")
+
+### [HH:MM:SS] PHASE:read-plan - INVOKED
 > Reading plan from plans/plan-<ID>.md
-> Implementing: <component-list>
+
+### [HH:MM:SS] PHASE:read-plan - Complete
+> Plan loaded; components: <component-list>
+
+### [HH:MM:SS] PHASE:implement - INVOKED
+> Implementing: migrations, business logic, security, API, devops
+
+### [HH:MM:SS] PHASE:implement - Complete
+> Output: <key files created, components implemented>
+...
+### [HH:MM:SS] PHASE:build - INVOKED
+> Building...
+
+### [HH:MM:SS] PHASE:build - Complete
+> <build outcome>
+
+### [HH:MM:SS] PHASE:test - INVOKED
+> Running tests...
+
+### [HH:MM:SS] PHASE:test - Complete
+> <test outcome>
+
+### [HH:MM:SS] PHASE:validation - INVOKED
+> Verifying components, security, compile
+
+### [HH:MM:SS] PHASE:validation - Complete
+> <validation outcome>
 
 ### [HH:MM:SS] COMMAND:execute - COMPLETE
 > Implementation complete
@@ -98,7 +126,7 @@ Log to `logs/workflow.md` using the format in `01-workflow-logging.mdc` (match R
 ### SUMMARY
 - **Command**: /execute
 - **Result**: Implementation complete
-- **Key points**: <plan path>, components implemented, key files created, any notable decisions or issues>
+- **Key points**: <plan path>, phases (read-plan, implement, build, test, validation), components implemented, key files created, any notable decisions or issues>
 ```
 
 ## Example
@@ -117,16 +145,44 @@ Log output (in README format):
 
 ### [10:31:01] COMMAND:execute - START
 > Input: "plans/plan-20260319-103000"
-> Reading plan from plans/plan-20260319-103000.md
-> Implementing: UserService, AuthMiddleware, /login route
 
-### [10:31:45] COMMAND:execute - COMPLETE
+### [10:31:02] PHASE:read-plan - INVOKED
+> Reading plan from plans/plan-20260319-103000.md
+
+### [10:31:05] PHASE:read-plan - Complete
+> Plan loaded; components: UserService, AuthMiddleware, /login route
+
+### [10:31:06] PHASE:implement - INVOKED
+> Implementing: migrations, business logic, security, API, devops
+
+### [10:31:40] PHASE:implement - Complete
+> Output: src/services/user.ts, src/middleware/auth.ts, src/routes/auth.ts
+
+### [10:31:41] PHASE:build - INVOKED
+> Building...
+
+### [10:31:43] PHASE:build - Complete
+> Build succeeded
+
+### [10:31:44] PHASE:test - INVOKED
+> Running tests...
+
+### [10:31:45] PHASE:test - Complete
+> All tests passed
+
+### [10:31:45] PHASE:validation - INVOKED
+> Verifying components, security, compile
+
+### [10:31:46] PHASE:validation - Complete
+> Validation passed
+
+### [10:31:46] COMMAND:execute - COMPLETE
 > Implementation complete
 
 ### SUMMARY
 - **Command**: /execute
 - **Result**: Implementation complete
-- **Key points**: plan-20260319-103000. UserService, AuthMiddleware, /login route. Key files: src/services/user.ts, src/middleware/auth.ts.
+- **Key points**: plan-20260319-103000. Phases: read-plan, implement, build, test, validation. UserService, AuthMiddleware, /login route. Key files: src/services/user.ts, src/middleware/auth.ts.
 ```
 
 ## Next Step
