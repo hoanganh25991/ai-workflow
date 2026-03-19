@@ -46,6 +46,10 @@ Use the **Quote of the Day API** — small scope, one copy-paste, then execute.
 
 **2. Execute:** Run `/execute plans/plan-<ID>` (use the plan ID from the log). Done — `logs/workflow.md` will have the full run.
 
+Sample preview markdown workflow.md
+
+![workflow-20260319-122306.jpg](logs/workflow-20260319-122306.jpg)
+
 ---
 
 ## /plan — Workflow Step 1: Analyze & Design
