@@ -74,9 +74,19 @@ After implementation:
 
 ## Logging
 
-Log to `logs/workflow.md` in README format (see `01-workflow-logging.mdc`):
+Log to `logs/workflow.md` using the format in `01-workflow-logging.mdc` (match README "What Gets Logged"):
+
+- Start each run with `## Workflow Run: <ISO timestamp>`, **Task**, **Command**: /execute
+- Use `### [HH:MM:SS] COMMAND:execute - START` and `COMMAND:execute - COMPLETE`
+- Log plan path, components implemented, and completion
+- Append a **SUMMARY** block (see `01-workflow-logging.mdc`): Command, Result, Key points (plan path, components, key files, notable decisions or issues)
 
 ```
+---
+## Workflow Run: YYYY-MM-DDTHH:MM:SSZ
+**Task**: Implement plans/plan-<ID>
+**Command**: /execute
+
 ### [HH:MM:SS] COMMAND:execute - START
 > Input: "plans/plan-<ID>" (or "latest")
 > Reading plan from plans/plan-<ID>.md
@@ -97,9 +107,14 @@ Log to `logs/workflow.md` in README format (see `01-workflow-logging.mdc`):
 /execute plans/plan-20260319-103000
 ```
 
-Log output:
+Log output (in README format):
 
 ```
+---
+## Workflow Run: 2026-03-19T10:31:00Z
+**Task**: Implement plans/plan-20260319-103000
+**Command**: /execute
+
 ### [10:31:01] COMMAND:execute - START
 > Input: "plans/plan-20260319-103000"
 > Reading plan from plans/plan-20260319-103000.md
