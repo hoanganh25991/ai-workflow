@@ -1,0 +1,57 @@
+# Coding Standards Rule
+
+## Purpose
+
+Enforce TypeScript/Node.js coding standards automatically on every code change.
+
+## Activation
+
+This rule is **always-on**. It activates automatically when code files are created or modified.
+
+## Standards
+
+### TypeScript
+
+- Use strict mode (`strict: true` in tsconfig.json)
+- Avoid `any` type — use `unknown` when type is truly unknown
+- Use explicit return types on public functions
+- Use interfaces for object shapes, types for unions/primitives
+- Prefer `const` over `let`, avoid `var`
+- Use optional chaining (`?.`) and nullish coalescing (`??`) when appropriate
+
+### Node.js
+
+- Use async/await over raw promises for readability
+- Handle errors with try/catch blocks or .catch()
+- Use environment variables via `process.env` with defaults
+- Close resources (connections, file handles) in finally blocks or cleanup handlers
+
+### Code Style
+
+- 2 spaces for indentation
+- Single quotes for strings
+- Trailing commas in multiline structures
+- Max line length: 100 characters
+- No semicolons (or always semicolons — be consistent with project)
+
+### Naming Conventions
+
+- **Files**: kebab-case (`user-service.ts`, `auth-middleware.ts`)
+- **Classes**: PascalCase (`UserService`, `AuthMiddleware`)
+- **Functions/variables**: camelCase (`getUserById`, `isAuthenticated`)
+- **Constants**: UPPER_SNAKE_CASE (`MAX_RETRY_COUNT`, `API_BASE_URL`)
+- **Interfaces**: PascalCase with `I` prefix optional (`User` or `IUser`)
+
+### Documentation
+
+- JSDoc comments for public APIs and complex logic
+- Inline comments for non-obvious decisions or trade-offs
+- No commented-out code (use version control)
+
+## Enforcement
+
+This rule provides guidance during code generation. The agent should:
+
+1. Apply these standards when writing new code
+2. Correct violations when identified
+3. Suggest improvements for existing code when relevant

@@ -1,0 +1,126 @@
+# Workflow Logging Rule
+
+## Purpose
+
+Enforce complete workflow observability by logging every skill invocation and command execution to `logs/workflow.md`.
+
+## Activation
+
+This rule is **always-on**. It activates automatically on every agent action — you do not invoke it.
+
+## Behavior
+
+When any agent action occurs, this rule intercepts and logs. Use the **exact** formats below so logs match the README spec and remain parseable.
+
+### 1. Command Start/End
+
+When a workflow command (`/plan`, `/execute`, `/review`) is invoked:
+
+```
+### [HH:MM:SS] COMMAND:<command> - START
+> Input: "<user request>"
+```
+
+When complete:
+
+```
+### [HH:MM:SS] COMMAND:<command> - COMPLETE
+> <summary or plan ID if applicable>
+```
+
+### 2. Skill Invocation
+
+When an agent invokes a skill:
+
+```
+### [HH:MM:SS] SKILL:<skill-name> - INVOKED
+> <skill action description>
+```
+
+When skill completes:
+
+```
+### [HH:MM:SS] SKILL:<skill-name> - Complete
+> <result summary>
+```
+
+Use skill names from README: `solution-design`, `database-design`, `security-review`, `devops-pipeline`.
+
+### 3. Decision Logged
+
+When an agent makes a significant decision:
+
+```
+### [HH:MM:SS] DECISION: <decision description>
+```
+
+Example: `[DECISION] Tech stack: Express + TypeScript + PostgreSQL`
+
+### 4. Rule Applied
+
+When a rule is applied (e.g. coding standards check):
+
+```
+### [HH:MM:SS] RULE:<rule-name>: <outcome>
+```
+
+Example: `[RULE:coding-standards] Validated: ESLint config present`
+
+### 5. Warning/Issue
+
+When a warning or issue is identified:
+
+```
+### [HH:MM:SS] WARN: <description>
+```
+
+Example: `[WARN] No rate limiting detected in API design`
+
+### 6. Error Logged
+
+When an error occurs:
+
+```
+### [HH:MM:SS] ERROR: <error description>
+```
+
+## Log Location
+
+All entries are appended to: `logs/workflow.md`
+
+The log file is an **append-only** record. Entries are never modified or deleted.
+
+## Log Format (match README)
+
+Each workflow run MUST start with:
+
+```markdown
+---
+## Workflow Run: YYYY-MM-DDTHH:MM:SSZ
+**Task**: <short task description>
+**Command**: /<plan|execute|review>
+```
+
+Then use `### [HH:MM:SS] EVENT - STATE` for each line. This matches the README "What Gets Logged" and "Example Log Entry" sections.
+
+## Example
+
+```markdown
+---
+## Workflow Run: 2026-03-19T10:30:00Z
+**Task**: Add authentication to user API
+**Command**: /plan
+
+### [10:30:01] COMMAND:plan - START
+> Input: "Add authentication to user API"
+
+### [10:30:02] SKILL:solution-design - INVOKED
+> Analyzing requirements...
+> - Identified 3 functional requirements (login, logout, token refresh)
+
+### [10:30:10] SKILL:solution-design - Complete
+> Output: 3 components identified
+
+### [10:30:15] COMMAND:plan - COMPLETE
+> Plan saved to plans/plan-20260319-103000.md
+```

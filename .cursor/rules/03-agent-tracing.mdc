@@ -1,0 +1,66 @@
+# Agent Tracing Rule
+
+## Purpose
+
+Track sub-agent orchestration with parent-child relationships and trace IDs.
+
+## Activation
+
+This rule is **always-on**. It activates automatically when an agent spawns a sub-agent.
+
+## Behavior
+
+### Sub-Agent Spawn
+
+When a parent agent spawns a sub-agent, log in README format:
+
+```
+### [HH:MM:SS] AGENT:<parent>: Spawning sub-agent for <role>
+> Trace ID: <unique-trace-id>
+> Task: <task-description>
+```
+
+Example: `[AGENT:orchestrator] Spawning sub-agent for database-design`
+
+### Sub-Agent Completion
+
+When a sub-agent completes:
+
+```
+### [HH:MM:SS] AGENT:<sub-id>: Complete - <result-summary>
+> Trace ID: <unique-trace-id>
+> Duration: <time-elapsed>
+```
+
+Example: `[AGENT:sub-01] Complete - schema with 4 tables designed`
+
+### Parent-Child Relationship
+
+- Each sub-agent carries a `trace_id` linking it to its parent
+- Sub-agents can spawn their own sub-agents (grandchildren)
+- Trace IDs form a chain: `parent-id > child-id > grandchild-id`
+
+## Trace ID Format
+
+```
+<timestamp>-<random>
+Example: 20260319-103000-a7x9k
+```
+
+## Logging
+
+All agent events are logged to `logs/workflow.md` with trace IDs for correlation.
+
+## Example
+
+```
+[10:30:05] AGENT: Spawning sub-agent "database-designer"
+> Parent: orchestrator
+> Task: Design database schema for user domain
+> Trace ID: 20260319-103005-m3n8p
+
+[10:30:25] AGENT: Sub-agent "database-designer" completed
+> Trace ID: 20260319-103005-m3n8p
+> Duration: 20s
+> Output: Schema with 3 tables designed
+```
