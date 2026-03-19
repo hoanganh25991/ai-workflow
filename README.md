@@ -1,7 +1,5 @@
 # AI Engineering Workflow
 
-Transform Cursor into a structured engineering workflow with full observability — trace every decision, skill invocation, and action in your development process.
-
 Modern AI-assisted development isn't just about code completion. This repo demonstrates how to turn Cursor into a structured workflow engine for software engineering using four powerful primitives:
 
 | Primitive    | Purpose                         | Example                                     |
